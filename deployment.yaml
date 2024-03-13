@@ -1,0 +1,41 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: eventz-app-node-deployment
+# spec:
+#   replicas: 2
+#   selector:
+#     matchLabels:
+#       app: eventz-app-node
+#   template:
+#     metadata:
+#       labels:
+#         app: eventz-app-node
+#     spec:
+#       containers:
+#         - name: eventz-app-node
+#           image: 250738637992.dkr.ecr.eu-west-1.amazonaws.com/eventz-app-node:latest
+#           ports:
+#             - containerPort: 3000
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eventz-app-node
+  labels:
+    app: eventz-app-node
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: eventz-app-node
+  template:
+    metadata:
+      labels:
+        app: eventz-app-node
+    spec:
+      containers:
+      - name: eventz-app-node
+        image: 250738637992.dkr.ecr.eu-west-1.amazonaws.com/eventz-app-node:latest
+        ports:
+        - containerPort: 3000
