@@ -1,5 +1,6 @@
 const express = require('express');
 const { getEventz, addOrUpdateEvent, deleteEvent, getEventsById } = require('../data/eventsSchema');
+const { getLocationCoordinates } = require('./utility/locationConvertorUtility');
 const route = express.Router();
 
 
@@ -28,7 +29,10 @@ route.get('/:id', async(req, res) => {
 route.post('/', async(req, res) => {
     try {
         const event = req.body;
-        event.id = new Date() + ''.split(' ').join();
+        event.event_id = new Date()+''.split(' ').join();
+        const coordinates = await getLocationCoordinates(event.eventVenue);
+        event.eventLat = coordinates.latitude+''
+        event.eventLong = coordinates.longitude+''
         await addOrUpdateEvent(event)
         const events = await getEventz();
         res.send(events);
