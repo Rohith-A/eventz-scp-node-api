@@ -12,7 +12,7 @@ const imageRoutes = require('./routes/images')
 // const taskRoutes = require('./routes/tasks')
 bodyParser = require("body-parser"),
 app.use(express.json({ limit: '30 mb' }));
-const port = process.env.PORT || 3005;
+const port = process.env.PORT || 3000;
 var cors = require('cors')
 app.use(cors())
 express.json({ limit: '10mb' })
