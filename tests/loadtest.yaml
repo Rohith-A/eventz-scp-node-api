@@ -1,0 +1,15 @@
+config:
+  target: "http://evntz-node-api.ap-south-1.elasticbeanstalk.com"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+    - duration: 60
+      arrivalRate: 10
+scenarios:
+  - flow:
+      - post:
+          url: "/location/coordinates"
+          json:
+            to: "name"
+            latitude: "53.280609991998"
+            longitude: "-6.31307001519"

@@ -184,24 +184,24 @@ router.post('/login',  async (req, res, next) => {
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
           s4() + '-' + s4() + s4() + s4();
         }
-  function writeSessiontoDB(SessionID){
-        var WriteSessionID = {
-            TableName:"AuthenticationSessionKeys",
-            Item:{
-                id: idGenerator(),
-                "SessionId": SessionID,
-                "userName": username_from_header,
-                "createDate": Date().toString()
+//   function writeSessiontoDB(SessionID){
+//         var WriteSessionID = {
+//             TableName:"AuthenticationSessionKeys",
+//             Item:{
+//                 id: idGenerator(),
+//                 "SessionId": SessionID,
+//                 "userName": username_from_header,
+//                 "createDate": Date().toString()
   
-            }
-        };
-        docClient.put(WriteSessionID, function(err, data) {
-            if (err) {
-                console.log("Unable to add item. Error JSON:",err, 2);
-            } else {
-            }
-        });
-  };
+//             }
+//         };
+//         docClient.put(WriteSessionID, function(err, data) {
+//             if (err) {
+//                 console.log("Unable to add item. Error JSON:",err, 2);
+//             } else {
+//             }
+//         });
+//   };
  docClient.get(params, function(err, data) {
     if (err) {
         res.json({"Error":{"Critical":"Unable to read item. "+err}});
@@ -210,8 +210,9 @@ router.post('/login',  async (req, res, next) => {
         foundpassword_from_DB = data.Item.password_SHA512;
         if (SearchHashedPass === foundpassword_from_DB){
           var SessionID = SessionID_Generator()
-          writeSessiontoDB(SessionID)
+        //   writeSessiontoDB(SessionID)
           res.send({"OK":{"SessionID":SessionID, userName: username_from_header}});
+          return;
       } else {
         res.json({"Warning":{"Response":"Login failed, credentials are incorrect."}});
         // Commit IP to the BLOCK DB after 10 attempts

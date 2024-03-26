@@ -1,0 +1,10 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: eventz-app-node
+  region: ap-south-1
+managedNodeGroups:
+- name: eventz-app-nodegroup  
+  launchTemplate:
+    id: lt-id
+    version: "1"

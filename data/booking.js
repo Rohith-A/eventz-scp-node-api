@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk');
+const { filterTasksByUserName } = require('../routes/utility/mapCommentHistory');
 require('dotenv').config();
 
 AWS.config.update({
@@ -8,22 +9,23 @@ AWS.config.update({
 });
 
 const dynamoClient = new AWS.DynamoDB.DocumentClient();
-const TABLE_NAME = 'eventz';
+const TABLE_NAME = 'booking';
 const userTable = 'authentication'
 
-const getEventz = async () => {
+const getBookings = async (userName) => {
     const params = {
         TableName: TABLE_NAME
     };
     try{
-        const events = await dynamoClient.scan(params).promise();
-        return events;
+        const bookings = await dynamoClient.scan(params).promise();
+        const filteredBookings = filterTasksByUserName(userName, bookings)
+        return filteredBookings;
     } catch(e) {
         return e
     }
 }
 
-const addOrUpdateEvent = async (event) => {
+const addOrUpdateBooking = async (event) => {
     const params = {
         TableName: TABLE_NAME,
         Item: event
@@ -33,10 +35,9 @@ const addOrUpdateEvent = async (event) => {
     } catch(e) {
         return e
     }
-    
 }
 
-const getEventsById = async (id) => {
+const getBookingsById = async (id) => {
     const params = {
         TableName: TABLE_NAME,
         Key: {
@@ -66,7 +67,7 @@ const getUserId = async (id) => {
     }
 };
 
-const deleteEvent = async (id) => {
+const deleteBooking = async (id) => {
     const params = {
         TableName: TABLE_NAME,
         Key: {
@@ -82,10 +83,10 @@ const deleteEvent = async (id) => {
 
 module.exports = {
     dynamoClient,
-    getEventz,
-    addOrUpdateEvent,
-    getEventsById,
-    deleteEvent,
+    getBookings,
+    addOrUpdateBooking,
+    getBookingsById,
+    deleteBooking,
     getUserId
 };
 // addOrUpdateCharacter(hpChar);

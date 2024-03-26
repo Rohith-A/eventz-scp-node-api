@@ -1,27 +1,36 @@
 const axios = require('axios');
 
-const apiKey = '55f427e99dd44bd0a50c6b3bca42a6f5';
+const apiKey = process.env.MAPS_API_KEY;
+let googleapiKey = process.env.GOOGLE_API_KEY;
 
 async function getLocationCoordinates(locationName) {
   try {
-    const response = await axios.get('https://api.opencagedata.com/geocode/v1/json', {
-      params: {
-        q: locationName,
-        key: apiKey,
-      },
-    });
+    // const response = await axios.get('https://api.opencagedata.com/geocode/v1/json', {
+    //   params: {
+    //     q: locationName,
+    //     key: apiKey,
+    //   },
+    // });
+    const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=${googleapiKey}`);
+    // let geoLocation = JSON.parse(response);
+    let geoLocation = response.data;
+    let mssg = `lat: ${geoLocation.results[0].geometry.location.lat} long: ${geoLocation.results[0].geometry.location.lng}`;
+    console.log(mssg);
+    return {
+          latitude: geoLocation.results[0].geometry.location.lat,
+          longitude: geoLocation.results[0].geometry.location.lng,
+        };
+    // const results = response.data.results;
 
-    const results = response.data.results;
-
-    if (results.length > 0) {
-      const location = results[0].geometry;
-      return {
-        latitude: location.lat,
-        longitude: location.lng,
-      };
-    } else {
-      throw new Error('Location not found');
-    }
+    // if (results.length > 0) {
+    //   const location = results[0].geometry;
+    //   return {
+    //     latitude: location.lat,
+    //     longitude: location.lng,
+    //   };
+    // } else {
+    //   throw new Error('Location not found');
+    // }
   } catch (error) {
     throw new Error(`Error fetching coordinates: ${error.message}`);
   }
@@ -29,17 +38,11 @@ async function getLocationCoordinates(locationName) {
 
 async function getLocationName(latitude, longitude) {
   try {
-    const response = await axios.get('https://api.opencagedata.com/geocode/v1/json', {
-      params: {
-        q: `${latitude},${longitude}`,
-        key: apiKey,
-      },
-    });
-
+    const URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleapiKey}`
+    const response = await axios.get(URL);
     const results = response.data.results;
-
     if (results.length > 0) {
-      return results[0].formatted;
+      return results[0].formatted_address;
     } else {
       throw new Error('Location not found');
     }
