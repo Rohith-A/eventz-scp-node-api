@@ -42,7 +42,9 @@ async function getLocationName(latitude, longitude) {
     const response = await axios.get(URL);
     const results = response.data.results;
     if (results.length > 0) {
-      return results[0].formatted_address;
+      return {
+        address: results[0].formatted_address
+      };
     } else {
       throw new Error('Location not found');
     }
