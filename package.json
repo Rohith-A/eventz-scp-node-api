@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon node app.js",
-    "start-gendoc": "nodemon node swagger.js"
+    "start": "node app.js",
+    "start-gendoc": "node swagger.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,7 +19,6 @@
     "mongodb": "4.1",
     "mongoose": "^8.2.1",
     "nodemon": "^3.1.0",
-    "saveit-data-uitility": "^1.4.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   }
