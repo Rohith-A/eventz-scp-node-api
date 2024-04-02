@@ -9,6 +9,7 @@ const locationRoutes = require('./routes/locationConverter')
 const eventRoutes = require('./routes/eventz')
 // const monngoDbTestRoutes = require('./routes/mongoDb')
 const imageRoutes = require('./routes/images')
+const bookingRoutes = require('./routes/bookings')
 // const taskRoutes = require('./routes/tasks')
 bodyParser = require("body-parser"),
 app.use(express.json({ limit: '30 mb' }));
@@ -26,6 +27,7 @@ app.use('/location', locationRoutes)
 // app.use('/dbTest', monngoDbTestRoutes)
 app.use('/events', eventRoutes)
 app.use('/image', imageRoutes)
+app.use('/booking', bookingRoutes)
 // app.use('/tasks', taskRoutes)
 
 app.listen(port, () => {

@@ -1,3 +1,4 @@
+const { getEventz } = require("../../data/eventsSchema");
 const { getTasksComments } = require("../../data/tasks_comments");
 const { getTasksHistory } = require("../../data/tasks_history");
 
@@ -23,15 +24,18 @@ const mapCommentHistory = async (task) => {
     return task;
 }
 
-const filterTasksByUserName = (userName, tasks) => {
+const filterTasksByUserName = async(userName, tasks) => {
     const filteredTasks = []
-     tasks?.forEach((task) => {
-        if(task.userName === userName) {
-          filteredTasks.push(task);
+    const events = await getEventz()
+     tasks?.Items?.forEach((booking) => {
+        if(booking.userName === userName) {
+            const event = events.Items.find((v) => v.event_id === booking.event_id)
+          filteredTasks.push({booking, event});
         }
     })
     return filteredTasks;
 }
+
 module.exports={
     mapCommentHistory,
     filterTasksByUserName

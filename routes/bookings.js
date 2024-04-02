@@ -5,7 +5,7 @@ const route = express.Router();
 
 
 
-route.post('/', async(req, res) => {
+route.post('/orders', async(req, res) => {
     try {
         const events = await getBookings(req.body.userName);
         res.send(events);
@@ -29,12 +29,12 @@ route.get('/:id', async(req, res) => {
 route.post('/', async(req, res) => {
     try {
         const booking = req.body;
-        booking.id = new Date();
+        booking.booking_id = new Date()+''.split(' ').join('');
         const newBooking = await addOrUpdateBooking(booking);
-        const event = await getEventsById(req.body.eventId);
-        event.tickets = event.tickets-1;
-        await addOrUpdateEvent(event);
-        res.send(newBooking);
+        const event = await getEventsById(req.body.event_id);
+        event.Item.seats = Number(event.Item.seats)-req.body.tickets;
+        const eventData = await addOrUpdateEvent(event.Item);
+        res.send({newBooking, eventData});
     } catch (error) {
         console.error(error);
         res.status(500).json(error);

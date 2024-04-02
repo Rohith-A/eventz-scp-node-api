@@ -9,7 +9,7 @@ AWS.config.update({
 });
 
 const dynamoClient = new AWS.DynamoDB.DocumentClient();
-const TABLE_NAME = 'booking';
+const TABLE_NAME = 'bookings';
 const userTable = 'authentication'
 
 const getBookings = async (userName) => {
@@ -18,7 +18,7 @@ const getBookings = async (userName) => {
     };
     try{
         const bookings = await dynamoClient.scan(params).promise();
-        const filteredBookings = filterTasksByUserName(userName, bookings)
+        const filteredBookings = await filterTasksByUserName(userName, bookings)
         return filteredBookings;
     } catch(e) {
         return e
