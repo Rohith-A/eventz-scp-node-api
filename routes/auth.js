@@ -4,7 +4,6 @@ const AWS = require('aws-sdk');
 // const cookieParser=require('cookie-parser');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
-const { idGenerator } = require('saveit-data-uitility');
 "use strict";
 
 // generate a hash from string
