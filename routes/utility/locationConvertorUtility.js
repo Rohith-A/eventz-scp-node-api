@@ -15,7 +15,6 @@ async function getLocationCoordinates(locationName) {
     // let geoLocation = JSON.parse(response);
     let geoLocation = response.data;
     let mssg = `lat: ${geoLocation.results[0].geometry.location.lat} long: ${geoLocation.results[0].geometry.location.lng}`;
-    console.log(mssg);
     return {
           latitude: geoLocation.results[0].geometry.location.lat,
           longitude: geoLocation.results[0].geometry.location.lng,

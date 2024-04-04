@@ -7,10 +7,12 @@ if (cluster.isMaster) {
   // Fork workers
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
+    console.log('#### Number of cores available -', numCPUs)
+    console.log(`Worker ${i}`)
   }
 
   cluster.on('exit', (worker, code, signal) => {
-    console.log(`Worker ${worker.process.pid} died`);
+    console.log(`#### Worker ${worker.process.pid} died`);
   });
 } else {
   const express = require('express');
